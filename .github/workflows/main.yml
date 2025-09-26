@@ -25,11 +25,11 @@ jobs:
 
       # === 5. Step 3: Install dependencies ===
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       # === 6. Step 4: run tests ===
       - name: Run tests
-        run: pnpm test
+        run: npm test
 
   print-hello:
     runs-on: ubuntu-latest
