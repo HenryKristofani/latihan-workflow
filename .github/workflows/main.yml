@@ -1,0 +1,40 @@
+name: Latihan Workflow
+
+# === 1. Kapan workflow dijalankan ===
+on:
+  push:        # Jalankan setiap ada push
+    branches: [ "main" ]
+  pull_request: # Jalankan juga setiap ada PR
+    branches: [ "main" ]
+
+# === 2. Definisi jobs ===
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest   # Runner environment
+
+    steps:
+      # === 3. Step 1: Checkout repository ===
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # === 4. Step 2: Setup Node.js ===
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      # === 5. Step 3: Install dependencies ===
+      - name: Install dependencies
+        run: npm install
+
+      # === 6. Step 4: Jalankan test ===
+      - name: Run tests
+        run: npm test
+
+  print-hello:
+    runs-on: ubuntu-latest
+    needs: build-and-test # Hanya jalan setelah job pertama sukses
+
+    steps:
+      - name: Print Hello World
+        run: echo "✅ Workflow berjalan sukses! Hello World 🎉"
